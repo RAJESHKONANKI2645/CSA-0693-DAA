@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+void generate_primes(int limit) {
+    // Create an array to track prime numbers
+    bool is_prime[limit + 1];
+
+    // Initialize all entries as true. A value in is_prime[i] will
+    // be false if i is not a prime.
+    for (int i = 0; i <= limit; i++) {
+        is_prime[i] = true;
+    }
+
+    // 0 and 1 are not prime numbers
+    is_prime[0] = false;
+    is_prime[1] = false;
+
+    // Implementing the Sieve of Eratosthenes
+    for (int p = 2; p * p <= limit; p++) {
+        // If is_prime[p] is still true, then it is a prime
+        if (is_prime[p]) {
+            // Mark all multiples of p as false
+            for (int multiple = p * p; multiple <= limit; multiple += p) {
+                is_prime[multiple] = false;
+            }
+        }
+    }
+
+    // Print all prime numbers
+    printf("Prime numbers up to %d are:\n", limit);
+    for (int i = 2; i <= limit; i++) {
+        if (is_prime[i]) {
+            printf("%d ", i);
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int limit;
+
+    // Ask user for the limit
+    printf("Enter the upper limit to generate prime numbers: ");
+    scanf("%d", &limit);
+
+    // Generate prime numbers up to the specified limit
+    generate_primes(limit);
