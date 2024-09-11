@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure to represent an item
+typedef struct {
+    int value;
+    int weight;
+    double ratio; // Value to weight ratio
+} Item;
+
+// Comparator function for sorting items by their value-to-weight ratio
+int compare(const void *a, const void *b) {
+    Item *item1 = (Item *)a;
+    Item *item2 = (Item *)b;
+    return (item2->ratio > item1->ratio) - (item2->ratio < item1->ratio);
+}
+
+// Function to perform the fractional knapsack algorithm
+double fractional_knapsack(Item items[], int n, int capacity) {
+    // Sort items by value-to-weight ratio
+    qsort(items, n, sizeof(Item), compare);
+
+    double total_value = 0.0; // Total value of the knapsack
+    for (int i = 0; i < n; i++) {
+        if (capacity == 0) {
+            break; // Knapsack is full
+        }
+
+        // If the item can be fully accommodated
+        if (items[i].weight <= capacity) {
+            capacity -= items[i].weight;
+            total_value += items[i].value;
+        } else {
+            // Take the fraction of the remaining item
+            total_value += items[i].value * ((double)capacity / items[i].weight);
+            capacity = 0; // Knapsack is now full
+        }
+    }
+
+    return total_value;
+}
+
+int main() {
+    int n, capacity;
+
+    // Ask user for the number of items
+    printf("Enter the number of items: ");
+    scanf("%d", &n);
+
+    // Create an array of items
+    Item items[n];
+
+    // Input items' values and weights
+    for (int i = 0; i < n; i++) {
+        printf("Enter value and weight for item %d: ", i + 1);
