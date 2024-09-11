@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define MAX 100
+
+int main() {
+    int n, i, j, k;
+    int graph[MAX][MAX];
+
+    printf("Enter the number of nodes: ");
+    scanf("%d", &n);
+
+    printf("Enter the adjacency matrix:\n");
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            scanf("%d", &graph[i][j]);
+            if (graph[i][j] == 0 && i != j) {
+                graph[i][j] = INT_MAX; // No direct edge, set weight to infinity
+            }
+        }
+    }
+
+    // Apply Floyd's algorithm
+    for (k = 0; k < n; k++) {
+        for (i = 0; i < n; i++) {
+            for (j = 0; j < n; j++) {
+                if (graph[i][k] != INT_MAX && graph[k][j] != INT_MAX &&
+                    graph[i][k] + graph[k][j] < graph[i][j]) {
+                    graph[i][j] = graph[i][k] + graph[k][j]; // Update the distance
+                }
+            }
+        }
+    }
+
+    printf("Shortest distances between all pairs of nodes:\n");
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            if (graph[i][j] == INT_MAX) {
+                printf("INF\t"); // Print "INF" for unreachable nodes
+            } else {
+                printf("%d\t", graph[i][j]);
+            }
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
