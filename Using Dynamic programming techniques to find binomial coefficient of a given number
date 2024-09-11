@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+int binomialCoefficient(int n, int k) {
+    // Create a 2D array to store binomial coefficients
+    int C[n + 1][k + 1];
+
+    // Calculate value of Binomial Coefficient in bottom-up manner
+    for (int i = 0; i <= n; i++) {
+        for (int j = 0; j <= k && j <= i; j++) {
+            // Base cases
+            if (j == 0 || j == i) {
+                C[i][j] = 1; // C(n, 0) = C(n, n) = 1
+            } else {
+                // Recursive relation
+                C[i][j] = C[i - 1][j - 1] + C[i - 1][j];
+            }
+        }
+    }
+
+    return C[n][k]; // Return the final result
+}
+
+int main() {
+    int n, k;
+
+    // Input values for n and k
+    printf("Enter n (total number of items): ");
+    scanf("%d", &n);
+    printf("Enter k (number of items to choose): ");
+    scanf("%d", &k);
+
+    // Calculate and print the binomial coefficient
+    int result = binomialCoefficient(n, k);
+    printf("C(%d, %d) = %d\n", n, k, result);
+
+    return 0;
+}
