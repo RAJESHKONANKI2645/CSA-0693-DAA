@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+// Function to calculate Fibonacci number recursively
+int fibonacci(int n) {
+    if (n == 0) {
+        return 0; // Base case: F(0) = 0
+    } else if (n == 1) {
+        return 1; // Base case: F(1) = 1
+    } else {
+        return fibonacci(n - 1) + fibonacci(n - 2); // Recursive case
+    }
+}
+
+int main() {
+    int terms, i;
+
+    // Ask user for the number of terms
+    printf("Enter the number of terms in the Fibonacci series: ");
+    scanf("%d", &terms);
+
+    printf("Fibonacci Series: ");
+    for (i = 0; i < terms; i++) {
+        printf("%d ", fibonacci(i)); // Print Fibonacci number for each term
+    }
+    
+    printf("\n");
+    return 0;
+}
