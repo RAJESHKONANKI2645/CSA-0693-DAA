@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <string.h>
+
+// Function to calculate the length of a string
+int string_length(char str[]) {
+    int length = 0;
+    while (str[length] != '\0') {
+        length++;
+    }
+    return length;
+}
+
+int main() {
+    char input[100];
+
+    // Ask user for input
+    printf("Enter a string: ");
+    fgets(input, sizeof(input), stdin); // Using fgets to read a string with spaces
+
+    // Remove the newline character from fgets if present
+    input[strcspn(input, "\n")] = '\0';
+
+    // Method 1: Using strlen function
+    int length1 = strlen(input);
+    printf("Length using strlen: %d\n", length1);
+
+    // Method 2: Using custom function
+    int length2 = string_length(input);
+    printf("Length using custom function: %
