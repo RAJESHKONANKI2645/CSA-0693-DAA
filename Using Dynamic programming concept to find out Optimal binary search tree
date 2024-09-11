@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <limits.h>
+
+// Function to calculate the cost of the Optimal Binary Search Tree
+int optimalSearchTree(int keys[], int freq[], int n) {
+    // Create a table to store results of subproblems
+    int cost[n][n];
+
+    // Fill the diagonal entries (cost of one key)
+    for (int i = 0; i < n; i++) {
+        cost[i][i] = freq[i];
+    }
+
+    // Calculate cost for chains of length 2 to n
+    for (int chain_length = 2; chain_length <= n; chain_length++) {
+        for (int i = 0; i < n - chain_length + 1; i++) {
+            int j = i + chain_length - 1;
+            cost[i][j] = INT_MAX;
+
+            // Try different roots for the subtree
+            for (int r = i; r <= j; r++) {
+                // Calculate cost when keys[r] is the root
+                int c = ((r >
